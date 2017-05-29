@@ -1,0 +1,15 @@
+version: '2'
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: fxa-dashboard
+    container_name: fxa-dashboard-container
+    environment:
+      - NODE_ENV=development
+    ports:
+      - "8080:3000"
+    volumes:
+      - .:/src
+      - /src/node_modules
