@@ -9,5 +9,3 @@ COPY yarn.lock yarn.lock
 
 COPY . /src
 RUN yarn install
-
-CMD yarn start

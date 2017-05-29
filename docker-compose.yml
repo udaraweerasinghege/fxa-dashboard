@@ -5,6 +5,7 @@ services:
       context: .
       dockerfile: Dockerfile
     image: fxa-dashboard
+    command: yarn start
     container_name: fxa-dashboard-container
     environment:
       - NODE_ENV=development
