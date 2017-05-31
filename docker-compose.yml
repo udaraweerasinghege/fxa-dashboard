@@ -10,7 +10,7 @@ services:
     environment:
       - NODE_ENV=development
     ports:
-      - "8080:3000"
+      - "3000:3000"
     volumes:
       - .:/src
       - /src/node_modules
