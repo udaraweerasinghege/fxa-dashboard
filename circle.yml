@@ -19,7 +19,7 @@ test:
 deployment:
   hub_latest:
     owner: udaraweerasinghege
-    branch: /^(master|feature.*|dockerpush.*)$/
+    branch: /^(master|dev)$/
     commands:
       - "[ ! -z $DOCKERHUB_REPO ]"
       - docker login -e "$DOCKER_EMAIL" -u "$DOCKER_USER" -p "$DOCKER_PASS"
