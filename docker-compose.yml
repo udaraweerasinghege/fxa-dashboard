@@ -4,7 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: fxa-dashboard
+    image: u5cevryday/fxa-dashboard
     command: yarn start
     container_name: fxa-dashboard-container
     environment:

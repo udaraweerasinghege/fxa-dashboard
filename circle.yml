@@ -1,0 +1,25 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  override:
+    - yarn
+  cache_directories:
+    - ~/.cache/yarn
+
+test:
+  override:
+    - yarn test
+
+deployment:
+  hub_releases:
+    owner: u5cevryday
+    tag: /.*/
+    commands: 
+      - "[ ! -z $DOCKERHUB_REPO ]"
+      - docker login -e "$DOCKER_EMAIL" -u "$DOCKER_USER" -p "$DOCKER_PASS"
+      - "echo ${DOCKERHUB_REPO}:${CIRCLE_TAG}"
+      - "docker tag fxa-dashboard:build ${DOCKERHUB_REPO}:${CIRCLE_TAG}"
+      - "docker images"
+      - "docker push ${DOCKERHUB_REPO}:${CIRCLE_TAG}"
