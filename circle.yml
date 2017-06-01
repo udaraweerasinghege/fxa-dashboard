@@ -13,10 +13,10 @@ dependencies:
 test:
   override:
     - yarn test
+  post:
+    - docker build -t fxa-dashboard:build .
 
 deployment:
-  pre:
-    - docker build -t fxa-oauth-console:build .
   hub_latest:
     owner: udaraweerasinghege
     branch: /^(master|feature.*|dockerpush.*)$/
