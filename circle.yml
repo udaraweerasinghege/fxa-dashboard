@@ -15,6 +15,20 @@ test:
     - yarn test
 
 deployment:
+  hub_latest:
+    owner: u5cevryday
+    branch: /^(master|feature.*|dockerpush.*)$/
+    commands:
+      - "[ ! -z $DOCKERHUB_REPO ]"
+      - docker login -e "$DOCKER_EMAIL" -u "$DOCKER_USER" -p "$DOCKER_PASS"
+      - |
+          if [ $CIRCLE_BRANCH = "master" ]; then
+            CIRCLE_BRANCH=latest
+          fi
+          echo ${DOCKERHUB_REPO}:${CIRCLE_BRANCH}
+          docker tag fxa-dashboard:build ${DOCKERHUB_REPO}:${CIRCLE_BRANCH}
+          docker push ${DOCKERHUB_REPO}:${CIRCLE_BRANCH}
+
   hub_releases:
     owner: u5cevryday
     tag: /.*/
