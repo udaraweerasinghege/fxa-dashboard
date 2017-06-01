@@ -16,7 +16,7 @@ test:
 
 deployment:
   hub_latest:
-    owner: u5cevryday
+    owner: udaraweerasinghege
     branch: /^(master|feature.*|dockerpush.*)$/
     commands:
       - "[ ! -z $DOCKERHUB_REPO ]"
@@ -30,7 +30,7 @@ deployment:
           docker push ${DOCKERHUB_REPO}:${CIRCLE_BRANCH}
 
   hub_releases:
-    owner: u5cevryday
+    owner: udaraweerasinghege
     tag: /.*/
     commands: 
       - "[ ! -z $DOCKERHUB_REPO ]"
