@@ -3,8 +3,12 @@
   width: 100%
 }
 
-.vis-group{
-  background: #0d354e;
+.vis-group {
+  background: black;
+}
+
+.vis-item-content {
+  color: white;
 }
 
 .vis-time-axis {
