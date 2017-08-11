@@ -6,6 +6,7 @@
     "express": "^4.15.3",
     "morgan": "^1.8.2",
     "mysql": "^2.13.0",
+    "node-google-calendar": "^1.0.0",
     "react": "^15.5.4",
     "react-dom": "^15.5.4"
   },
@@ -20,6 +21,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "node server/server.js"
   }
 }

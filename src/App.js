@@ -4,6 +4,7 @@ import './App.css';
 import 'normalize.css';
 import 'vis/dist/vis.css';
 import vis from 'vis';
+import {generateEvents, generatePointEvent} from './mocks'
 
 class App extends Component {
   constructor() {
@@ -11,29 +12,59 @@ class App extends Component {
     this.options = {
       orientation: 'top'
     }
+    this.groupMapping = {
+      FF_RELEASE: 6,
+      FXA_EVENT: 7
+    }
   }
 
-  initTimeline() {
+  initTimeline(data) {
     const container = document.getElementById('mytimeline');
     const groups = new vis.DataSet([
-      {id: 0, content: 'OauthServer', value: 1},
-      {id: 1, content: 'ProfileServer', value: 3},
-      {id: 2, content: 'ContentServer', value: 2}
+      // {id: 0, content: 'Oauth Server', value: 1},
+      // {id: 1, content: 'Profile Server', value: 2},
+      // {id: 2, content: 'Content Server', value: 3},
+      // {id: 3, content: 'Customs Server', value: 4},
+      // {id: 4, content: 'Tokens Server', value: 5},
+      {id: 5, content: 'Auth Server', value: 6},
+      {id: 6, content: 'Firefox Releases', value: 7},
+      {id: 7, content: 'FxA Events', value: 8}
     ]);
-    const items = new vis.DataSet([
-      {id: 1, content: 'item 1', start: '2013-04-20', type: 'point', group: 0},
-      {id: 2, content: 'item 2', start: '2013-04-14', type: 'point', group: 0},
-      {id: 3, content: 'item 3', start: '2013-04-18', type: 'point', group: 1},
-      {id: 4, content: 'item 4', start: '2013-04-16', type: 'point', group: 1},
-      {id: 5, content: 'item 5', start: '2013-04-25', type: 'point', group: 2},
-      {id: 6, content: 'item 6', start: '2013-04-27', type: 'point', group: 2}
-    ]);
-    this.timeline=new vis.Timeline(container, items, this.options);
+
+    let dataset = data.map(evt => {
+      return {
+        id: evt.id,
+        content: evt.summary,
+        start: evt.start.date || evt.start.dateTime,
+        type: 'point',
+        group: this.groupMapping[evt.type]
+      };
+    });
+
+    const mockData1 = generateEvents(0);
+    const mockData2 = generateEvents(1);
+    const mockData3 = generateEvents(2);
+    const mockData4 = generateEvents(3);
+    const mockData5 = generateEvents(4);
+    const mockData6 = generatePointEvent(5);
+
+    dataset = [].concat.apply([], [dataset, mockData1, mockData2, mockData3, mockData4, mockData5, mockData6]);
+    const timelineItems = new vis.DataSet(dataset);
+    this.timeline=new vis.Timeline(container, timelineItems, this.options);
     this.timeline.setGroups(groups);
+  }
+  getTimelineData() {
+    fetch('http://localhost:1337/api/timeline-data')
+      .then(res => {
+        return(res.json());
+      })
+      .then(data => {
+        this.initTimeline(data);
+      });;
   }
 
   componentDidMount() {
-    return this.initTimeline();
+    return this.getTimelineData();
   }
 
   render() {
